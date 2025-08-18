@@ -4,12 +4,28 @@ from datetime import datetime
 class Favorite(db.Model):
     __tablename__ = 'favorites'
 
+
     if environment == "production":
-        __table_args__ = {'schema': SCHEMA}
+        __table_args__ = (
+            db.UniqueConstraint('user_id', 'product_id', name='unique_user_product_fav'),
+            {'schema': SCHEMA}
+        )
+    else:
+        __table_args__ = (
+            db.UniqueConstraint('user_id', 'product_id', name='unique_user_product_fav'),
+        )
 
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('users.id')), nullable=False)
-    product_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('products.id')), nullable=False)
+    user_id = db.Column(
+        db.Integer,
+        db.ForeignKey(add_prefix_for_prod('users.id')),
+        nullable=False
+    )
+    product_id = db.Column(
+        db.Integer,
+        db.ForeignKey(add_prefix_for_prod('products.id')),
+        nullable=False
+    )
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def to_dict(self):

@@ -1,11 +1,22 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from app.models import User, db
-from app.forms import LoginForm
-from app.forms import SignUpForm
-from flask_login import current_user, login_user, logout_user, login_required
+from app.forms import LoginForm, SignUpForm
+from flask_login import current_user, login_user, logout_user
+from flask_wtf.csrf import generate_csrf
 
 auth_routes = Blueprint('auth', __name__)
 
+@auth_routes.route('/csrf/', methods=['GET'])
+def get_csrf():
+    """
+    Generates a CSRF token, sets it in a cookie, and returns it in JSON.
+    This lets API clients (Postman, curl, etc.) fetch the token and send it
+    back with subsequent POST/PUT/DELETE requests.
+    """
+    token = generate_csrf()
+    resp = jsonify({'csrf_token': token})
+    resp.set_cookie('csrf_token', token)
+    return resp
 
 @auth_routes.route('/')
 def authenticate():
@@ -16,40 +27,34 @@ def authenticate():
         return current_user.to_dict()
     return {'errors': {'message': 'Unauthorized'}}, 401
 
-
 @auth_routes.route('/login', methods=['POST'])
 def login():
     """
-    Logs a user in
+    Logs a user in.
     """
     form = LoginForm()
-    # Get the csrf_token from the request cookie and put it into the
-    # form manually to validate_on_submit can be used
-    form['csrf_token'].data = request.cookies['csrf_token']
+    form['csrf_token'].data = request.cookies.get('csrf_token')
     if form.validate_on_submit():
-        # Add the user to the session, we are logged in!
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()
     return form.errors, 401
 
-
 @auth_routes.route('/logout')
 def logout():
     """
-    Logs a user out
+    Logs a user out.
     """
     logout_user()
     return {'message': 'User logged out'}
 
-
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():
     """
-    Creates a new user and logs them in
+    Creates a new user and logs them in.
     """
     form = SignUpForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
+    form['csrf_token'].data = request.cookies.get('csrf_token')
     if form.validate_on_submit():
         user = User(
             username=form.data['username'],
@@ -62,10 +67,9 @@ def sign_up():
         return user.to_dict()
     return form.errors, 401
 
-
 @auth_routes.route('/unauthorized')
 def unauthorized():
     """
-    Returns unauthorized JSON when flask-login authentication fails
+    Returns unauthorized JSON when flask-login authentication fails.
     """
     return {'errors': {'message': 'Unauthorized'}}, 401
