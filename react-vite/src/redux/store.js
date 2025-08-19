@@ -6,10 +6,14 @@ import {
 } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
+import productsReducer from "./products";
+
 
 const rootReducer = combineReducers({
   session: sessionReducer,
+  products: productsReducer,
 });
+
 
 let enhancer;
 if (import.meta.env.MODE === "production") {
@@ -21,8 +25,11 @@ if (import.meta.env.MODE === "production") {
   enhancer = composeEnhancers(applyMiddleware(thunk, logger));
 }
 
+
 const configureStore = (preloadedState) => {
   return createStore(rootReducer, preloadedState, enhancer);
 };
+
+
 
 export default configureStore;

@@ -2,14 +2,15 @@ import { createBrowserRouter } from 'react-router-dom';
 import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
+import ProductsList from '../features/products/ProductsList';
 
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
-        path: "/",
-        element: <h1>Welcome!</h1>,
+      path: "/",
+      element: <ProductsList />
       },
       {
         path: "login",
@@ -18,6 +19,10 @@ export const router = createBrowserRouter([
       {
         path: "signup",
         element: <SignupFormPage />,
+      },
+       { 
+        path: "products", 
+        element: <ProductsList /> 
       },
     ],
   },
