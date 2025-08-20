@@ -12,6 +12,8 @@ export default function ProductsList() {
   const products = useSelector((state) => state.products.allProducts);
   const user = useSelector((state) => state.session.user);
 
+
+  
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
@@ -23,9 +25,7 @@ export default function ProductsList() {
     <div>
       <div className="products-header">
         <h2>All Products</h2>
-        {user && (
-          <button onClick={() => navigate("/cart")}>View Cart</button>
-        )}
+        <button onClick={() => navigate("/cart")}>View Cart</button>
       </div>
       
       {user && (

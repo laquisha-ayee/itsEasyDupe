@@ -41,26 +41,38 @@ export const fetchCartItems = () => async (dispatch) => {
   }
 };
 
-export const createCartItem = (productId, quantity = 1) => async (dispatch) => {
-  const response = await fetch('/api/cart_items/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include',
-    body: JSON.stringify({
-      product_id: productId,
-      quantity: quantity
-    })
-  });
+export const createCartItem = (productId, quantity = 1) => async (dispatch, getState) => {
+  const state = getState();
+  const user = state.session.user;
+  const existingCartItems = Object.values(state.cart);
+  
+  const existingItem = existingCartItems.find(item => item.product_id === productId);
+  
 
-  if (response.ok) {
-    const item = await response.json();
-    dispatch(addCartItem(item));
-    return item;
+  if (existingItem) {
+    dispatch(updateCartItemThunk(existingItem.id, existingItem.quantity + quantity));
   } else {
-    const error = await response.json();
-    throw error;
+    const response = await fetch('/api/cart_items/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      credentials: 'include',
+      body: JSON.stringify({
+        product_id: productId,
+        quantity: quantity,
+        user_id: user.id
+      })
+    });
+
+    if (response.ok) {
+      const item = await response.json();
+      dispatch(addCartItem(item));
+      return item;
+    } else {
+      const error = await response.json();
+      throw error;
+    }
   }
 };
 
@@ -99,7 +111,9 @@ export const deleteCartItemThunk = (id) => async (dispatch) => {
   }
 };
 
-// Reducer
+
+
+
 const cartReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_CART_ITEMS: {
