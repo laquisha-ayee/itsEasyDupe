@@ -178,13 +178,16 @@ def seed_products():
     db.session.commit()
 
 def undo_products():
-    if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.products RESTART IDENTITY CASCADE;")
-    else:
-        db.session.execute(text("DELETE FROM products;"))
-        try:
-            db.session.execute(text('DELETE FROM sqlite_sequence WHERE name="products";'))
-        except Exception:
-            pass
-
-    db.session.commit()
+    try:
+        if environment == "production":
+            db.session.execute(f"TRUNCATE table {SCHEMA}.products RESTART IDENTITY CASCADE;")
+        else:
+            db.session.execute(text("DELETE FROM products;"))
+            try:
+                db.session.execute(text('DELETE FROM sqlite_sequence WHERE name="products";'))
+            except Exception:
+                pass
+        db.session.commit()
+        print("Cleared products table.")
+    except Exception:
+        print("Skipping products undo due to an error.")

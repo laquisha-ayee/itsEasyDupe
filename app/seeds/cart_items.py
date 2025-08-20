@@ -24,5 +24,6 @@ def undo_cart_items():
         db.session.execute(text("DELETE FROM cart_items;"))
         db.session.commit()
         print("Cleared cart_items table.")
-    except Exception as e:
-        print(f"Skipping cart_items undo due to error: {e}")
+    except Exception:
+        print("Skipping cart_items undo due to an error.")
+        

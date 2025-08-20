@@ -27,7 +27,6 @@ def seed_favorites():
         Favorite(user_id=3, product_id=5, created_at=datetime.utcnow()),
     ]
 
-    # Log each favorite for clarity
     for fav in favorites:
         db.session.add(fav)
         print(f"User {fav.user_id} favorited Product {fav.product_id}")
@@ -35,11 +34,9 @@ def seed_favorites():
     db.session.commit()
 
 def undo_favorites():
-    db.session.execute(text('DELETE FROM favorites'))
-    db.session.commit()
-    print("All favorites deleted.")
-
-
-
-
-
+    try:
+        db.session.execute(text('DELETE FROM favorites;'))
+        db.session.commit()
+        print("Cleared favorites table.")
+    except Exception:
+        print("Skipping favorites undo due to an error.")
