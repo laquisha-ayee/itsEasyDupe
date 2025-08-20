@@ -4,6 +4,7 @@ import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import ProductsList from '../features/products/ProductsList';
 import EditProductForm from '../features/products/EditProductForm';
+import ProductForm from '../features/products/ProductForm';
 
 
 
@@ -27,6 +28,10 @@ export const router = createBrowserRouter([
       {
         path: "products",
         element: <ProductsList />
+      },
+      {
+        path: "products/new", 
+        element: <ProductForm initialData={{}} />
       },
       {
         path: "products/:id/edit", 

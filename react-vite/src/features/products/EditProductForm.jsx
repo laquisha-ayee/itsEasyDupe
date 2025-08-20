@@ -1,82 +1,54 @@
-import { useState, useEffect } from "react";
-import './ProductForm.css';
+// src/features/products/EditProductForm.jsx
+import { useEffect, useState } from "react";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchProducts, updateProduct } from "../../redux/products";
+import ProductForm from "./ProductForm";
 
+export default function EditProductForm() {
+  const { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-export default function ProductForm({ initialData = {}, onSubmit }) {
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    price: "",
-    imageUrl: "",
-  });
+  const user = useSelector((state) => state.session.user);
+  const productFromStore = useSelector((state) =>
+    state.products.allProducts.find((p) => p.id === Number(id))
+  );
 
-useEffect(() => {
-  if (initialData) {
-    setFormData({
-      title: initialData.title || "",
-      description: initialData.description || "",
-      price: initialData.price || "",
-      imageUrl: initialData.imageUrl || "",
-    });
+  const [initialData, setInitialData] = useState(productFromStore || null);
+
+  useEffect(() => {
+    if (!productFromStore) {
+      dispatch(fetchProducts());
+    } else {
+      setInitialData(productFromStore);
+    }
+  }, [productFromStore, dispatch]);
+
+  if (!user) {
+    return <Navigate to="/login" replace />;
   }
-}, [initialData]); 
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  if (!initialData) {
+    return <p>Loading product...</p>;
+  }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    onSubmit(formData);
-    setFormData({ title: "", description: "", price: "", imageUrl: "" });
+  const handleUpdate = async (updatedData) => {
+    const payload = {
+      title: updatedData.title,
+      description: updatedData.description,
+      price: updatedData.price,
+      image_url: updatedData.imageUrl 
+    };
+
+    await dispatch(updateProduct({ productId: id, updatedData: payload }));
+    navigate("/products");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="product-form">
-      <h2>{initialData.id ? "Edit Product" : "Add New Product"}</h2>
-
-      <label htmlFor="title">Title</label>
-      <input
-        id="title"
-        name="title"
-        value={formData.title}
-        onChange={handleChange}
-        placeholder="Enter product title"
-        required
-      />
-
-      <label htmlFor="description">Description</label>
-      <textarea
-        id="description"
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-        placeholder="Enter product description"
-      />
-
-      <label htmlFor="price">Price</label>
-      <input
-        id="price"
-        name="price"
-        type="number"
-        value={formData.price}
-        onChange={handleChange}
-        placeholder="Enter price"
-        required
-      />
-
-      <label htmlFor="imageUrl">Image URL</label>
-      <input
-        id="imageUrl"
-        name="imageUrl"
-        value={formData.imageUrl}
-        onChange={handleChange}
-        placeholder="Enter image URL"
-      />
-
-      <button type="submit">
-        {initialData.id ? "Update Product" : "Add Product"}
-      </button>
-    </form>
+    <ProductForm
+      initialData={initialData}
+      onSubmit={handleUpdate}
+    />
   );
 }
