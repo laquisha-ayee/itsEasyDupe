@@ -5,7 +5,7 @@ import Layout from './Layout';
 import ProductsList from '../features/products/ProductsList';
 import EditProductForm from '../features/products/EditProductForm';
 import ProductForm from '../features/products/ProductForm';
-
+import CartItems from '../features/cartItems/CartItems';
 
 
 
@@ -36,6 +36,11 @@ export const router = createBrowserRouter([
       {
         path: "products/:id/edit", 
         element: <EditProductForm />
+      },
+      {
+         path: "cart", 
+         element: <CartItems />  
+
       }
     ],
   },

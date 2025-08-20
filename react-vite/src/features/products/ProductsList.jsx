@@ -23,7 +23,9 @@ export default function ProductsList() {
     <div>
       <div className="products-header">
         <h2>All Products</h2>
-        <button onClick={() => navigate("/cart")}>View Cart</button>
+        {user && (
+          <button onClick={() => navigate("/cart")}>View Cart</button>
+        )}
       </div>
       
       {user && (
@@ -33,7 +35,6 @@ export default function ProductsList() {
           </button>
         </div>
       )}
-
 
       <div className="products-list">
         {products.map((product) => (
