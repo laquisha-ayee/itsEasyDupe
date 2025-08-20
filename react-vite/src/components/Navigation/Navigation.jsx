@@ -7,16 +7,12 @@ function Navigation() {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <ul>
+    <ul className="nav-list">
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
 
-      {sessionUser ? (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      ) : (
+      {!sessionUser && (
         <>
           <li>
             <NavLink to="/login">Log In</NavLink>
@@ -25,6 +21,12 @@ function Navigation() {
             <NavLink to="/signup">Sign Up</NavLink>
           </li>
         </>
+      )}
+
+      {sessionUser && (
+        <li>
+          <ProfileButton user={sessionUser} />
+        </li>
       )}
     </ul>
   );

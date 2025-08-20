@@ -3,14 +3,18 @@ import LoginFormPage from '../components/LoginFormPage';
 import SignupFormPage from '../components/SignupFormPage';
 import Layout from './Layout';
 import ProductsList from '../features/products/ProductsList';
+import EditProductForm from '../features/products/EditProductForm';
+
+
+
 
 export const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
       {
-      path: "/",
-      element: <ProductsList />
+        path: "/",
+        element: <ProductsList />
       },
       {
         path: "login",
@@ -20,10 +24,14 @@ export const router = createBrowserRouter([
         path: "signup",
         element: <SignupFormPage />,
       },
-       { 
-        path: "products", 
-        element: <ProductsList /> 
+      {
+        path: "products",
+        element: <ProductsList />
       },
+      {
+        path: "products/:id/edit", 
+        element: <EditProductForm />
+      }
     ],
   },
 ]);

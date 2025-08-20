@@ -1,0 +1,15 @@
+.product-form label {
+  display: block;
+  margin-top: 12px;
+  font-weight: bold;
+}
+
+.product-form input,
+.product-form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
