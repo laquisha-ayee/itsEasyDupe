@@ -1,7 +1,7 @@
 """Add favorites, cart_items, and reviews tables
 
 Revision ID: 86f7031fa621
-Revises: 0bb17b86ca36
+Revises: ffdc0a98111c
 Create Date: 2025-08-14 13:48:52.942718
 
 """
@@ -15,7 +15,7 @@ SCHEMA = os.environ.get("SCHEMA")
 
 # revision identifiers, used by Alembic.
 revision = '86f7031fa621'
-down_revision = '0bb17b86ca36'
+down_revision = 'ffdc0a98111c'
 branch_labels = None
 depends_on = None
 
