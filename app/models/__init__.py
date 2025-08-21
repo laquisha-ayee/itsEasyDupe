@@ -4,14 +4,3 @@ from .favorite import Favorite
 from .product import Product
 from .review import Review
 from .user import User
-
-__all__ = [
-    "db",
-    "environment",
-    "SCHEMA",
-    "User",
-    "Product",
-    "Favorite",
-    "Review",
-    "CartItem",
-]
