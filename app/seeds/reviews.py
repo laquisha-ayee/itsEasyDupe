@@ -1,6 +1,7 @@
 from sqlalchemy import text
 from datetime import datetime
 from app.models import db, Review
+from app.models.db import environment, SCHEMA  # ✅ Add this import
 
 def seed_reviews():
     reviews = [
@@ -24,11 +25,16 @@ def seed_reviews():
         print(f"User {review.user_id} reviewed Product {review.product_id}: '{review.comment}'")
 
     db.session.commit()
+    print("Seeded reviews table.")
 
 def undo_reviews():
-    try:
-        db.session.execute(text('DELETE FROM reviews;'))
-        db.session.commit()
-        print("Cleared reviews table.")
-    except Exception:
-        print("Skipping reviews undo due to an error.")
+    if environment == "production":
+        db.session.execute(text(f"TRUNCATE table {SCHEMA}.reviews RESTART IDENTITY CASCADE;"))  # ✅ Correct table name
+    else:
+        db.session.execute(text("DELETE FROM reviews"))
+        try:
+            db.session.execute(text('DELETE FROM sqlite_sequence WHERE name="reviews";'))
+        except Exception:
+            pass
+    db.session.commit()
+    print("Cleared reviews table.")

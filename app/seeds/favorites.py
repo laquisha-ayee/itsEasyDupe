@@ -1,6 +1,7 @@
 from sqlalchemy import text
 from datetime import datetime
 from app.models import db, Favorite
+from app.models.db import environment, SCHEMA
 
 def seed_favorites():
     favorites = [
@@ -34,9 +35,9 @@ def seed_favorites():
     db.session.commit()
 
 def undo_favorites():
-    try:
-        db.session.execute(text('DELETE FROM favorites;'))
-        db.session.commit()
-        print("Cleared favorites table.")
-    except Exception:
-        print("Skipping favorites undo due to an error.")
+    if environment == "production":
+        db.session.execute(text(f"TRUNCATE table {SCHEMA}.favorites RESTART IDENTITY CASCADE;"))
+    else:
+        db.session.execute(text("DELETE FROM favorites"))
+
+    db.session.commit()

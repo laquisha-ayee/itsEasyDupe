@@ -1,6 +1,6 @@
-from app.models import db, Product, environment, SCHEMA
-from sqlalchemy.sql import text
-
+from sqlalchemy import text
+from app.models import db, Product
+from app.models.db import environment, SCHEMA
 
 category_sellers = {
     "Candles": 1,       # Demo
@@ -12,6 +12,7 @@ category_sellers = {
 }
 
 def seed_products():
+
     products = [
         # Candles
         Product(
@@ -170,24 +171,23 @@ def seed_products():
         ),
     ]
 
-# Log each product's title, category, and seller assignment for clarity.
+
     for product in products:
         db.session.add(product)
         print(f"Seeding '{product.title}' → Category: {product.category} → Seller ID: {product.seller_id}")
 
     db.session.commit()
 
+
+
 def undo_products():
-    try:
-        if environment == "production":
-            db.session.execute(f"TRUNCATE table {SCHEMA}.products RESTART IDENTITY CASCADE;")
-        else:
-            db.session.execute(text("DELETE FROM products;"))
-            try:
-                db.session.execute(text('DELETE FROM sqlite_sequence WHERE name="products";'))
-            except Exception:
-                pass
-        db.session.commit()
-        print("Cleared products table.")
-    except Exception:
-        print("Skipping products undo due to an error.")
+    if environment == "production":
+        db.session.execute(text(f"TRUNCATE table {SCHEMA}.products RESTART IDENTITY CASCADE;"))
+    else:
+        db.session.execute(text("DELETE FROM products;"))
+        try:
+            db.session.execute(text('DELETE FROM sqlite_sequence WHERE name="products";'))
+        except Exception:
+            pass
+    db.session.commit()
+    print("Cleared products table.")
