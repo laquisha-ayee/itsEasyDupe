@@ -19,11 +19,12 @@ def seed_cart_items():
     db.session.commit()
     print("Seeded cart_items table.")
 
+
 def undo_cart_items():
-    try:
-        db.session.execute(text("DELETE FROM cart_items;"))
-        db.session.commit()
-        print("Cleared cart_items table.")
-    except Exception:
-        print("Skipping cart_items undo due to an error.")
+    if environment == "production":
+        db.session.execute(f"TRUNCATE table {SCHEMA}.cart_items RESTART IDENTITY CASCADE;")
+    else:
+        db.session.execute(text("DELETE FROM cart_items"))
+
+    db.session.commit()
         
