@@ -22,7 +22,7 @@ export default function ProductsList() {
   return (
     <div>
       <div className="products-header">
-        <h1 className="website-title">It's Easy</h1>
+        <h1 className="website-title">It&apos;s Easy</h1>
         <div className="header-action-buttons">
           {user && (
             <button onClick={() => navigate("/favorites")}>Manage Favorites</button>

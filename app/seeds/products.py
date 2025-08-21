@@ -164,7 +164,7 @@ def seed_products():
             title="Kind is Cool Tee",
             description="a great message on a comfy tee!",
             price=7.00,
-            image_url="https://images.pexels.com/photos/2294342/pexels-photo-2294342.jpeg",
+            image_url="https://images.pexels.com/photos/2205839/pexels-photo-2205839.jpeg",
             category="T-Shirts",
             seller_id=category_sellers["T-Shirts"]
         ),

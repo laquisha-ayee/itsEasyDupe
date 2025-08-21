@@ -18,7 +18,7 @@ export default function FavoritesList() {
     return (
       <div className="favorites-empty">
         <h2>Your Favorites</h2>
-        <p>You haven't added any favorites yet.</p>
+        <p>You haven&apos;t added any favorites yet.</p>
       </div>
     );
   }
