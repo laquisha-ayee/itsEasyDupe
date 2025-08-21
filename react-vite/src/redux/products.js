@@ -72,7 +72,7 @@ const productsSlice = createSlice({
       })
       .addCase(addProduct.fulfilled, (state, action) => {
         state.loading = false;
-        state.allProducts.push(action.payload);
+        state.allProducts.unshift(action.payload);
       })
       .addCase(addProduct.rejected, (state, action) => {
         state.loading = false;

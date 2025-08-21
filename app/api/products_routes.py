@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import db, Product
+from app.models import db, Product, CartItem, Favorite, Review
 
 products_routes = Blueprint('products', __name__, url_prefix='/products')
 
@@ -62,12 +62,22 @@ def update_product(id):
 @products_routes.route('/<int:id>', methods=['DELETE'], strict_slashes=False)
 @login_required
 def delete_product(id):
-    """DELETE /products/<id> - Delete a product"""
-    product = Product.query.get_or_404(id)
+    try:
+        product = Product.query.get_or_404(id)
 
-    if product.seller_id != current_user.id:
-        return jsonify({"error": "Not authorized to delete this product"}), 403
+        if product.seller_id != current_user.id:
+            return jsonify({"error": "Not authorized to delete this product"}), 403
 
-    db.session.delete(product)
-    db.session.commit()
-    return jsonify({'message': f'Product {id} deleted'}), 200
+            
+        CartItem.query.filter_by(product_id=id).delete()
+        Favorite.query.filter_by(product_id=id).delete()
+        Review.query.filter_by(product_id=id).delete()
+
+        db.session.delete(product)
+        db.session.commit()
+
+        return jsonify({'message': f'Product {id} deleted'}), 200
+
+    except Exception as e:
+        print(f"Error deleting product {id}: {e}")
+        return jsonify({"error": "Internal server error"}), 500

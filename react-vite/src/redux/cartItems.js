@@ -5,7 +5,6 @@ const DELETE_CART_ITEM = 'cart/DELETE_CART_ITEM';
 
 
 
-
 const getCartItems = (items) => ({
   type: GET_CART_ITEMS,
   items
@@ -30,10 +29,10 @@ const deleteCartItem = (id) => ({
 
 
 export const fetchCartItems = () => async (dispatch) => {
-  const response = await fetch('/api/cart_items/', {
+  const response = await fetch('/api/cart-items/', {
     credentials: 'include'
   });
-  
+
   if (response.ok) {
     const items = await response.json();
     dispatch(getCartItems(items));
@@ -45,14 +44,13 @@ export const createCartItem = (productId, quantity = 1) => async (dispatch, getS
   const state = getState();
   const user = state.session.user;
   const existingCartItems = Object.values(state.cart);
-  
+
   const existingItem = existingCartItems.find(item => item.product_id === productId);
-  
 
   if (existingItem) {
     dispatch(updateCartItemThunk(existingItem.id, existingItem.quantity + quantity));
   } else {
-    const response = await fetch('/api/cart_items/', {
+    const response = await fetch('/api/cart-items/', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -77,7 +75,7 @@ export const createCartItem = (productId, quantity = 1) => async (dispatch, getS
 };
 
 export const updateCartItemThunk = (id, quantity) => async (dispatch) => {
-  const response = await fetch(`/api/cart_items/${id}`, {
+  const response = await fetch(`/api/cart-items/${id}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json'
@@ -97,7 +95,7 @@ export const updateCartItemThunk = (id, quantity) => async (dispatch) => {
 };
 
 export const deleteCartItemThunk = (id) => async (dispatch) => {
-  const response = await fetch(`/api/cart_items/${id}`, {
+  const response = await fetch(`/api/cart-items/${id}`, {
     method: 'DELETE',
     credentials: 'include'
   });
@@ -110,7 +108,6 @@ export const deleteCartItemThunk = (id) => async (dispatch) => {
     throw error;
   }
 };
-
 
 
 

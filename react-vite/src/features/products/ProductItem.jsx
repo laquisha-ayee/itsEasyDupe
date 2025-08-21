@@ -74,7 +74,7 @@ export default function ProductItem({ product }) {
         </button>
       )}
 
-      {user && (
+      {user && user.id === product.user_id && (
         <div className="product-actions">
           <Link to={`/products/${product.id}/edit`}>
             <button>Edit</button>
@@ -85,3 +85,5 @@ export default function ProductItem({ product }) {
     </div>
   );
 }
+
+

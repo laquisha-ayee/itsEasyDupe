@@ -1,0 +1,4 @@
+.profile-dropdown li:last-child {
+  position: relative;  
+  z-index: 10;         
+}

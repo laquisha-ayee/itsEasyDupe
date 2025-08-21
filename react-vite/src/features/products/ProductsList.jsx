@@ -25,6 +25,9 @@ export default function ProductsList() {
         <h1 className="website-title">It&apos;s Easy</h1>
         <div className="header-action-buttons">
           {user && (
+            <button onClick={() => navigate("/products/manage")}> Manage Products</button>
+          )}
+          {user && (
             <button onClick={() => navigate("/favorites")}>Manage Favorites</button>
           )}
           {user && (

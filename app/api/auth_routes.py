@@ -3,6 +3,7 @@ from app.models import User, db
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user
 from flask_wtf.csrf import generate_csrf
+from flask_login import login_required
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -33,10 +34,11 @@ def login():
     login_user(user)
     return user.to_dict()
 
-@auth_routes.route('/logout')
+@auth_routes.route('/logout', methods=['POST'])
+@login_required
 def logout():
     logout_user()
-    return {'message': 'User logged out'}
+    return jsonify({'message': 'Logged out'}), 200
 
 @auth_routes.route('/signup', methods=['POST'])
 def sign_up():

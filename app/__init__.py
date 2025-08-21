@@ -4,15 +4,16 @@ from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_wtf.csrf import CSRFProtect, generate_csrf
 from flask_login import LoginManager
-from .models import db, User, Pin, pin_board, Board, Comment,Favorite
+from .models import db, User, CartItem, Favorite, Product, Review
 from .seeds import seed_commands
 from .config import Config
-from .api.users_routes import user_routes
+from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
-from .api.cart_items_routes import pin_routes
-from .api.favorites_routes import board_routes
-from .api.products_routes import comment_routes
-from .api.reviews_routes import favorite_routes
+from .api.cart_items_routes import cart_items_routes
+from .api.favorites_routes import favorites_routes
+from .api.products_routes import products_routes
+from .api.reviews_routes import reviews_routes
+
 
 
 
@@ -34,12 +35,12 @@ def load_user(id):
 app.cli.add_command(seed_commands)
 
 app.config.from_object(Config)
-app.register_blueprint(user_routes, url_prefix='/api/users_routes')
-app.register_blueprint(auth_routes, url_prefix='/api/auth_routes')
-app.register_blueprint(pin_routes, url_prefix='/api/cart_items_routes')
-app.register_blueprint(board_routes, url_prefix='/api/favorites_routes')
-app.register_blueprint(comment_routes, url_prefix='/api/products_routes')
-app.register_blueprint(favorite_routes, url_prefix='/api/reviews_routes')
+app.register_blueprint(user_routes, url_prefix='/api/users')
+app.register_blueprint(auth_routes, url_prefix='/api/auth')
+app.register_blueprint(cart_items_routes, url_prefix='/api/cart-items')
+app.register_blueprint(favorites_routes, url_prefix='/api/favorites')
+app.register_blueprint(products_routes, url_prefix='/api/products')
+app.register_blueprint(reviews_routes, url_prefix='/api/reviews')
 
 db.init_app(app)
 Migrate(app, db)
