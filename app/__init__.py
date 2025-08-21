@@ -107,4 +107,4 @@ def not_found(e):
     return app.send_static_file('index.html')
 
 
-    app = app
+   
