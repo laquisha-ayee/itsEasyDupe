@@ -6,7 +6,7 @@ import ProductsList from '../features/products/ProductsList';
 import EditProductForm from '../features/products/EditProductForm';
 import ProductForm from '../features/products/ProductForm';
 import CartItems from '../features/cartItems/CartItems';
-
+import FavoritesList from '../features/favorites/FavoritesList';
 
 
 export const router = createBrowserRouter([
@@ -40,7 +40,10 @@ export const router = createBrowserRouter([
       {
          path: "cart", 
          element: <CartItems />  
-
+      },
+      {
+        path: "favorites",
+        element: <FavoritesList />
       }
     ],
   },

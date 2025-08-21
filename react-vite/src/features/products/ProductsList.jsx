@@ -12,8 +12,6 @@ export default function ProductsList() {
   const products = useSelector((state) => state.products.allProducts);
   const user = useSelector((state) => state.session.user);
 
-
-  
   useEffect(() => {
     dispatch(fetchProducts());
   }, [dispatch]);
@@ -24,17 +22,19 @@ export default function ProductsList() {
   return (
     <div>
       <div className="products-header">
-        <h2>All Products</h2>
-        <button onClick={() => navigate("/cart")}>View Cart</button>
-      </div>
-      
-      {user && (
-        <div className="add-product-btn">
-          <button onClick={() => navigate("/products/new")}>
-            Add New Product
-          </button>
+        <h1 className="website-title">It's Easy</h1>
+        <div className="header-action-buttons">
+          {user && (
+            <button onClick={() => navigate("/favorites")}>Manage Favorites</button>
+          )}
+          {user && (
+            <button onClick={() => navigate("/cart")}>View Cart</button>
+          )}
+          {user && (
+            <button onClick={() => navigate("/products/new")}>Add New Product</button>
+          )}
         </div>
-      )}
+      </div>
 
       <div className="products-list">
         {products.map((product) => (
