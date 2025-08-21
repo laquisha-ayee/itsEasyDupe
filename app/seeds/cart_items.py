@@ -1,5 +1,6 @@
 from app.models import db, CartItem
 from sqlalchemy.sql import text
+from app.models.db import environment, SCHEMA
 
 def seed_cart_items():
     cart_items = [
