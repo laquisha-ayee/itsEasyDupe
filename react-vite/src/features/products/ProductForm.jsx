@@ -1,8 +1,8 @@
-// src/features/products/ProductForm.jsx
 import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "../../redux/products";
+import "./ProductForm.css";
 
 export default function ProductForm({ initialData = {}, onSubmit }) {
   const [formData, setFormData] = useState({
@@ -40,7 +40,6 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
     e.preventDefault();
 
     try {
-      // If EditProductForm passes a custom onSubmit handler, use that
       if (onSubmit) {
         return onSubmit(formData);
       }
@@ -77,51 +76,101 @@ export default function ProductForm({ initialData = {}, onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="product-form">
-      <h2>{initialData.id ? "Edit Product" : "Add New Product"}</h2>
+    <div className="form-container">
+      <form onSubmit={handleSubmit} className="product-form">
+        <h2>{initialData.id ? "Edit Product" : "Add New Product"}</h2>
 
-      <input
-        name="title"
-        value={formData.title}
-        onChange={handleChange}
-        placeholder="Title"
-        required
-      />
+        <div className="form-group">
+          <label htmlFor="title">Product Name</label>
+          <input
+            id="title"
+            name="title"
+            value={formData.title}
+            onChange={handleChange}
+            placeholder="Enter product name"
+            required
+          />
+        </div>
 
-      <textarea
-        name="description"
-        value={formData.description}
-        onChange={handleChange}
-        placeholder="Description"
-      />
+        <div className="form-group">
+          <label htmlFor="description">Description</label>
+          <textarea
+            id="description"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            placeholder="Enter product description"
+            rows="4"
+          />
+        </div>
 
-      <input
-        name="price"
-        type="number"
-        value={formData.price}
-        onChange={handleChange}
-        placeholder="Price"
-        required
-      />
+<div className="form-group">
+  <label htmlFor="price">Price</label>
+  <input
+    id="price"
+    name="price"
+    type="number"
+    step="0.01"
+    min="0"
+    value={formData.price}
+    onChange={handleChange}
+    placeholder="Enter price (e.g., 10.50)"
+    required
+  />
+</div>
 
-      <input
-        name="imageUrl"
-        value={formData.imageUrl}
-        onChange={handleChange}
-        placeholder="Image URL"
-      />
+        <div className="form-group">
+          <label htmlFor="imageUrl">Image URL</label>
+          <input
+            id="imageUrl"
+            name="imageUrl"
+            value={formData.imageUrl}
+            onChange={handleChange}
+            placeholder="Enter image URL"
+          />
+          
+          {formData.imageUrl && (
+            <div className="image-preview">
+              <img 
+                src={formData.imageUrl} 
+                alt="Product preview" 
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'block';
+                }}
+              />
+              <p className="image-error" style={{display: 'none'}}>
+                Image failed to load. Please check the URL.
+              </p>
+            </div>
+          )}
+        </div>
 
-      <input
-        name="category"
-        value={formData.category}
-        onChange={handleChange}
-        placeholder="Category"
-        required
-      />
+        <div className="form-group">
+          <label htmlFor="category">Category</label>
+          <input
+            id="category"
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
+            placeholder="Enter category"
+            required
+          />
+        </div>
 
-      <button type="submit">
-        {initialData.id ? "Update Product" : "Add Product"}
-      </button>
-    </form>
+        <div className="form-actions">
+          <button type="submit" className="submit-btn">
+            {initialData.id ? "Update Product" : "Add Product"}
+          </button>
+          <button 
+            type="button" 
+            className="cancel-btn"
+            onClick={() => navigate("/products")}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }

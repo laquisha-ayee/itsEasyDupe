@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { fetchProducts } from "../../redux/products";
+import { fetchFavorites } from "../../redux/favorites"; // Added this import
 import ProductItem from "./ProductItem";
 import "./ProductList.css";
 
@@ -14,7 +15,11 @@ export default function ProductsList() {
 
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch]);
+    // Added this to fetch favorites when page loads
+    if (user) {
+      dispatch(fetchFavorites());
+    }
+  }, [dispatch, user]); // Added user to dependencies
 
   if (!products) return <p>Loading products...</p>;
   if (products.length === 0) return <p>No products found.</p>;
@@ -32,9 +37,6 @@ export default function ProductsList() {
           )}
           {user && (
             <button onClick={() => navigate("/cart")}>View Cart</button>
-          )}
-          {user && (
-            <button onClick={() => navigate("/products/new")}>Add New Product</button>
           )}
         </div>
       </div>

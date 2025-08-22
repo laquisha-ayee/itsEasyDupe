@@ -1,6 +1,196 @@
+/* Main container - centers everything on the page and sets max width */
+.manage-products-container {
+  max-width: 1200px;          /* Limits how wide the content can get */
+  margin: 0 auto;             /* Centers the container horizontally */
+  padding: 20px;              /* Adds space around the content */
+  display: flex;              /* Makes this a flexbox container */
+  flex-direction: column;     /* Stacks children vertically */
+  align-items: center;        /* Centers children horizontally */
+}
+
+/* Header section with title and Add Product button */
+.manage-products-header {
+  display: flex;              /* Makes header a flexbox */
+  justify-content: space-between; /* Puts title on left, button on right */
+  align-items: center;        /* Centers items vertically */
+  margin-bottom: 30px;        /* Space below header */
+  padding-bottom: 20px;       /* Space inside bottom of header */
+  border-bottom: 2px solid #e0e0e0; /* Line under header */
+  width: 100%;                /* Takes full width of container */
+}
+
+/* Styling for the main title */
+.manage-products-header h2 {
+  margin: 0;                  /* Removes default margins */
+  color: #333;                /* Dark gray text color */
+  font-size: 44px;            /* Large font size */
+}
+
+/* Styling for the "Add Product" button in the header */
+.manage-products-header button {
+  background-color: white;    /* White background */
+  color: black;               /* Black text */
+  border: 1px solid black;    /* Black border */
+  padding: 8px 16px;          /* Smaller padding for smaller button */
+  border-radius: 6px;         /* Rounded corners */
+  cursor: pointer;            /* Hand cursor on hover */
+  font-size: 0.9rem;          /* Smaller font size */
+  font-weight: 500;           /* Medium font weight */
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; /* Smooth transition */
+}
+
+.manage-products-header button:hover {
+  background-color: #0056b3;  /* Blue background on hover */
+  color: white;               /* White text on hover */
+  border-color: #0056b3;      /* Blue border on hover */
+}
+
+
+/* Grid container for all product cards */
+.manage-products-list {
+  display: grid;              /* Makes this a CSS grid */
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive columns */
+  gap: 25px;                  /* Space between grid items */
+  width: 100%;                /* Takes full width */
+  max-width: 1000px;          /* Limits grid width */
+  justify-items: center;      /* Centers each grid item */
+}
+
+/* Individual product card styling */
+.manage-product-card {
+  border: 1px solid #e0e0e0;  /* Light gray border */
+  border-radius: 8px;         /* Rounded corners */
+  padding: 18px;              /* Space inside card */
+  background: white;          /* White background */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effects */
+  width: 100%;                /* Takes full width of grid cell */
+  max-width: 300px;           /* Limits card width */
+}
+
+/* Card hover effect - lifts card up slightly */
+.manage-product-card:hover {
+  transform: translateY(-2px); /* Moves card up 2px on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15); /* Bigger shadow on hover */
+}
+
+/* Product image styling */
 .manage-product-image {
-  width: 120px;      
-  height: auto;      
-  object-fit: cover; 
-  border-radius: 4px;
+  width: 100%;                /* Takes full width of card */
+  height: 200px;              /* Fixed height */
+  object-fit: cover;          /* Maintains aspect ratio, crops if needed */
+  border-radius: 6px;         /* Rounded corners */
+  margin-bottom: 15px;        /* Space below image */
+}
+
+/* Product title styling */
+.manage-product-card h3 {
+  margin: 0 0 10px 0;         /* Space below title only */
+  color: #333;                /* Dark gray text */
+  font-size: 28px;          /* Medium-large font */
+  text-align: center;         /* Centers the title text */
+}
+
+/* Product description styling */
+.product-description {
+  margin: 0 0 10px 0;         /* Space below description */
+  color: black;               
+  font-size: 0.9rem;          /* Smaller font size */
+  font-weight: normal;        /* Removes bold - makes text normal weight */
+  text-align: center;         /* Centers the description text */
+  line-height: 1.4;           /* Better line spacing for readability */
+  max-height: 60px;           /* Limits height to prevent very long descriptions */
+  overflow: hidden;           /* Hides text that exceeds the height */
+  display: -webkit-box;      
+  -webkit-box-orient: vertical;
+}
+
+/* Update the price styling to have a specific class */
+.product-price {
+  margin: 0 0 15px 0;         /* Space below price only */
+  color: #007bff;             /* Blue text for price */
+  font-weight: bold;          /* Bold text */
+  font-size: 1.1rem;          /* Slightly larger font */
+  text-align: center;         /* Centers the price text */
+}
+
+
+/* Product price styling */
+.manage-product-card p {
+  margin: 0 0 15px 0;         /* Space below price only */
+  color: black;             /* Blue text for price */
+  font-weight: bold;          /* Bold text */
+  font-size: 1.1rem;          /* Slightly larger font */
+  text-align: center;         /* Centers the price text */
+}
+
+/* Container for Edit and Delete buttons */
+.manage-product-actions {
+  display: flex;              /* Makes buttons side by side */
+  justify-content: center;    /* Centers buttons horizontally */
+  gap: 18px;                  /* Space between buttons */
+  width: 100%;                /* Takes full width of the card */
+}
+
+/* Styling for Edit and Delete buttons - now as links */
+.manage-product-actions button {
+  flex: 1;                    /* Each button takes equal space */
+  padding: 6px 12px;          /* Smaller padding */
+  border: none;               /* Removes the border */
+  border-radius: 0;           /* Removes rounded corners */
+  cursor: pointer;            /* Hand cursor on hover */
+  font-size: 16px;          /* Smaller font size */
+  font-weight: 500;           /* Medium font weight */
+  transition: color 0.2s ease, text-decoration 0.2s ease; /* Smooth transition */
+  background-color: transparent; /* Transparent background */
+  color: black;             /* Blue text like a link */
+  text-decoration: underline; /* Underlined like a link */
+}
+
+/* Edit button hover effect - turns green */
+.manage-product-actions button:first-child:hover {
+  background-color: transparent; /* Keeps transparent background */
+  color: #28a745;              /* Green text on hover */
+  text-decoration: underline;   /* Keeps underline */
+}
+
+/* Delete button hover effect - turns orange */
+.delete-btn:hover {
+  background-color: transparent !important; /* Keeps transparent background */
+  color: #dc3545 !important;                /* Orange text on hover */
+  text-decoration: underline !important;     /* Keeps underline */
+}
+
+
+/* Mobile responsive design - for screens smaller than 768px */
+@media (max-width: 768px) {
+  .manage-products-header {
+    flex-direction: column;   /* Stacks title and button vertically */
+    gap: 15px;                /* Space between title and button */
+    text-align: center;       /* Centers text */
+  }
+  
+  .manage-products-list {
+    grid-template-columns: 1fr; /* Single column on mobile */
+    max-width: 400px;         /* Smaller max width for mobile */
+  }
+  
+  .manage-product-actions {
+    flex-direction: column;   /* Stacks buttons vertically */
+  }
+}
+
+/* Extra small screens - for screens smaller than 480px */
+@media (max-width: 480px) {
+  .manage-products-container {
+    padding: 10px;            /* Less padding on very small screens */
+  }
+  
+  .manage-products-list {
+    gap: 15px;                /* Less space between cards */
+  }
+  
+  .manage-product-card {
+    padding: 15px;            /* Less padding inside cards */
+  }
 }
