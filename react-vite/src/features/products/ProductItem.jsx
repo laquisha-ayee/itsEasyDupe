@@ -47,11 +47,13 @@ export default function ProductItem({ product }) {
     <div className="product-item">
       <h3>{product.title}</h3>
       <div className="product-image-container">
-        <img
-          src={product.image_url}
-          alt={product.title || "Product image"}
-          className="product-image"
-        />
+        <Link to={`/products/${product.id}`}>
+          <img
+            src={product.image_url}
+            alt={product.title || "Product image"}
+            className="product-image"
+          />
+        </Link>
         {user && (
           <button 
             onClick={handleToggleFavorite} 
@@ -85,5 +87,3 @@ export default function ProductItem({ product }) {
     </div>
   );
 }
-
-

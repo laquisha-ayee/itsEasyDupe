@@ -8,7 +8,8 @@ import ProductForm from '../features/products/ProductForm';
 import CartItems from '../features/cartItems/CartItems';
 import FavoritesList from '../features/favorites/FavoritesList';
 import ManageProducts from '../features/products/ManageProducts';
-
+import ProductDetail from '../features/products/ProductDetail'; 
+import ManageReviews from "../features/reviews/ManageReviews";
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +51,14 @@ export const router = createBrowserRouter([
         path:"products/manage",
         element: <ManageProducts />
       },
+      {
+        path: "products/:id", 
+        element: <ProductDetail />
+      },
+    {
+      path: "reviews/manage", 
+      element: <ManageReviews />
+    }
     ],
   },
 ]);

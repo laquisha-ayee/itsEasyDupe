@@ -1,0 +1,251 @@
+/* ManageReviews.css */
+.manage-reviews-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.manage-reviews-container .manage-reviews-header {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 2px solid #e0e0e0;
+}
+
+.manage-reviews-container .manage-reviews-header h2 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 2rem;
+}
+
+.manage-reviews-container .manage-reviews-header p {
+  color: #666;
+  margin: 0;
+}
+
+.manage-reviews-container .no-reviews {
+  text-align: center;
+  padding: 40px;
+  color: #666;
+}
+
+.manage-reviews-container .reviews-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.manage-reviews-container .review-item {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.manage-reviews-container .review-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.manage-reviews-container .reviewer-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.manage-reviews-container .reviewer-name {
+  margin: 0;
+  color: #333;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.manage-reviews-container .review-rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.manage-reviews-container .stars {
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+
+.manage-reviews-container .rating-number {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.manage-reviews-container .review-date {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.manage-reviews-container .product-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+  padding: 10px;
+  background-color: #f8f9fa;
+  border-radius: 6px;
+}
+
+.manage-reviews-container .product-image {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.manage-reviews-container .product-details {
+  flex: 1;
+}
+
+.manage-reviews-container .product-title {
+  margin: 0 0 5px 0;
+  color: #333;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.manage-reviews-container .product-price {
+  margin: 0;
+  color: white;
+  font-weight: bold;
+  font-size: 0.8rem;
+}
+
+.manage-reviews-container .review-comment {
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.manage-reviews-container .review-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.manage-reviews-container .edit-btn,
+.manage-reviews-container .delete-btn {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: white;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
+}
+
+.manage-reviews-container .edit-btn:hover {
+  background: #f8f9fa;
+}
+
+.manage-reviews-container .delete-btn {
+  color: #dc3545;
+  border-color: #dc3545;
+}
+
+.manage-reviews-container .delete-btn:hover {
+  background: #dc3545;
+  color: white;
+}
+
+.manage-reviews-container .edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.manage-reviews-container .rating-input,
+.manage-reviews-container .comment-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.manage-reviews-container .rating-input label,
+.manage-reviews-container .comment-input label {
+  font-weight: 500;
+  color: #333;
+}
+
+.manage-reviews-container .rating-input input {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  width: 80px;
+}
+
+.manage-reviews-container .comment-input textarea {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  resize: vertical;
+  min-height: 80px;
+}
+
+.manage-reviews-container .edit-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-start;
+}
+
+.manage-reviews-container .save-btn,
+.manage-reviews-container .cancel-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  min-width: 80px;
+  flex: 0 0 auto;
+}
+
+.manage-reviews-container .save-btn {
+  background: #28a745;
+  color: white;
+}
+
+.manage-reviews-container .save-btn:hover {
+  background: #218838;
+}
+
+.manage-reviews-container .cancel-btn {
+  background: #6c757d;
+  color: white;
+}
+
+.manage-reviews-container .cancel-btn:hover {
+  background: #545b62;
+}
+
+.manage-reviews-container .star-rating {
+  display: flex;
+  gap: 5px;
+}
+
+.manage-reviews-container .star {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #ddd;
+  transition: color 0.2s ease;
+  padding: 0;
+  margin: 0;
+}
+
+.manage-reviews-container .star.filled {
+  color: #ffd700;
+}
+
+.manage-reviews-container .star:hover {
+  color: #ffd700;
+}

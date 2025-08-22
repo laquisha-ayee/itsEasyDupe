@@ -1,5 +1,5 @@
 from flask import Blueprint, request, jsonify
-from flask_login import login_required, current_user  # <-- ADD THIS
+from flask_login import login_required, current_user
 from app.models import db, Favorite
 from datetime import datetime
 
@@ -11,6 +11,8 @@ favorites_routes = Blueprint('favorites', __name__, url_prefix='/favorites')
 def create_favorite():
     data = request.get_json()
     product_id = data.get('product_id')
+    
+    print(f"Creating favorite for product_id: {product_id}, user_id: {current_user.id}")
 
     existing_favorite = Favorite.query.filter_by(
         product_id=product_id,
@@ -18,17 +20,23 @@ def create_favorite():
     ).first()
 
     if existing_favorite:
+        print(f"Favorite already exists: {existing_favorite.id}")
         return jsonify({'error': 'Item already favorited'}), 400
 
-    new_favorite = Favorite(
-        product_id=product_id,
-        user_id=current_user.id,      
-        created_at=datetime.utcnow()
-    )
-    db.session.add(new_favorite)
-    db.session.commit()
-
-    return jsonify(new_favorite.to_dict()), 201
+    try:
+        new_favorite = Favorite(
+            product_id=product_id,
+            user_id=current_user.id,      
+            created_at=datetime.utcnow()
+        )
+        db.session.add(new_favorite)
+        db.session.commit()
+        print(f"Successfully created favorite: {new_favorite.id}")
+        return jsonify(new_favorite.to_dict()), 201
+    except Exception as e:
+        print(f"Error creating favorite: {str(e)}")
+        db.session.rollback()
+        return jsonify({'error': f'Failed to create favorite: {str(e)}'}), 500
 
 #read
 @favorites_routes.route('/', methods=['GET'], strict_slashes=False)
@@ -65,4 +73,3 @@ def delete_favorite(id):
     db.session.delete(favorite)
     db.session.commit()
     return jsonify({'message': 'Favorite deleted'}), 200
-

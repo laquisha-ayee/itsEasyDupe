@@ -8,6 +8,12 @@ function Navigation() {
 
   return (
     <ul className="nav-list">
+      {sessionUser && (
+        <li>
+          <ProfileButton user={sessionUser} />
+        </li>
+      )}
+      
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
@@ -21,12 +27,6 @@ function Navigation() {
             <NavLink to="/signup">Sign Up</NavLink>
           </li>
         </>
-      )}
-
-      {sessionUser && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
       )}
     </ul>
   );

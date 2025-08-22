@@ -43,46 +43,60 @@ function LoginFormPage() {
     }
   };
 
+  const handleExit = () => {
+    navigate("/");
+  };
+
   return (
-    <>
-      <h1>Log In</h1>
-      {Array.isArray(errors) && errors.length > 0 &&
-        errors.map((message) => <p key={message}>{message}</p>)
-      }
-      <form onSubmit={handleSubmit}>
-        <label>
-          Email
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </label>
-        {errors.email && <p>{errors.email}</p>}
-
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.password && <p>{errors.password}</p>}
-
-        <button type="submit">Log In</button>
-
-        <button
-          type="button"
-          onClick={handleDemoLogin}
-          style={{ marginTop: "10px" }}
-        >
-          Demo User
+    <div className="login-container">
+      <div className="login-form-wrapper">
+        <button onClick={handleExit} className="exit-button">
+          ✕
         </button>
-      </form>
-    </>
+        
+        <h1>Log In</h1>
+        
+        {Array.isArray(errors) && errors.length > 0 &&
+          errors.map((message) => <p key={message} className="error-message">{message}</p>)
+        }
+        
+        <form onSubmit={handleSubmit} className="login-form">
+          <div className="form-fields">
+            <label>
+              Email
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </label>
+            {errors.email && <p className="error-message">{errors.email}</p>}
+
+            <label>
+              Password
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+            {errors.password && <p className="error-message">{errors.password}</p>}
+          </div>
+
+          <div className="form-buttons">
+            <button type="submit">Log In</button>
+            <button
+              type="button"
+              onClick={handleDemoLogin}
+            >
+              Demo User
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
   );
 }
 

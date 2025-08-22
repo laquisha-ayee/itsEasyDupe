@@ -9,6 +9,7 @@ import sessionReducer from "./session";
 import productsReducer from "./products";
 import cartReducer from "./cartItems";
 import favoritesReducer from "./favorites";
+import reviewsReducer from "./reviews";
 
 
 
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   products: productsReducer,
   cart: cartReducer, 
   favorites: favoritesReducer,
+  reviews: reviewsReducer,
 });
 
 
@@ -38,3 +40,4 @@ const configureStore = (preloadedState) => {
 
 
 export default configureStore;
+

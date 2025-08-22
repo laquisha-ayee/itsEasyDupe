@@ -36,5 +36,9 @@ class Review(db.Model):
             'product_id': self.product_id,
             'rating': self.rating,
             'comment': self.comment,
-            'created_at': self.created_at.isoformat()
+            'created_at': self.created_at.isoformat(),
+            'user': {
+                'id': self.user.id,
+                'username': self.user.username
+            } if self.user else None
         }
